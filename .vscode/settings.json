@@ -1,0 +1,16 @@
+{
+  "beautify.onSave": true,
+  "editor.formatOnSave": true,
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 100,
+  "eslint.trace.server": "verbose",
+  "typescript.tsdk": "frontend/node_modules/typescript/lib",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": false,
+    "**/.DS_Store": true
+  }
+}
