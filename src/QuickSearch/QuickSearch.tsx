@@ -11,7 +11,6 @@ type Props = {
 }
 
 const Search = styled('section')`
-  border: 1px solid #ccc;
   margin: 0 auto;
   display: flex;
   margin-top: 1rem;
@@ -21,6 +20,8 @@ const Search = styled('section')`
 const SearchForm = styled('form')`
   position: relative;
   width: 100%;
+  border: 1px solid #ccc;
+
   &fieldset {
     margin: 0;
     padding: 0;

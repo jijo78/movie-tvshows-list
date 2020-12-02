@@ -1,14 +1,14 @@
 import React, { FC, useState, useEffect } from 'react'
+
+import styled from 'styled-components'
+
 import useSWR from 'swr'
 import config from '../config'
 import { QuickSearch } from '../QuickSearch'
 import { SearchResults } from '../SearchResults'
 import { Error } from '../Error'
 
-import { debounce } from '../utilis/debounce'
-
 import { fetchData } from '../utilis/fetchData'
-import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
 interface Props {
@@ -24,6 +24,7 @@ export const Search: FC<Props> = () => {
   const [shouldFetch, setShouldFetch] = useState(false)
   const [term, setTerm] = useState('')
   const [payload, setPayload] = useState([]) as Array<any>
+  let fetchedData
 
   const history = useHistory()
 
@@ -37,53 +38,72 @@ export const Search: FC<Props> = () => {
       revalidateOnFocus: false,
     }
   )
-  if (data) {
-    const dat = data && data.results
-    setPayload(dat)
-    setShouldFetch(false)
-  }
+  fetchedData = data && data.results
+
   if (error) {
     return <Error>Something went wrong</Error>
   }
   console.log('payload: ', payload)
+
   const handleChange = (e: React.ChangeEvent<any>): boolean => {
     const term = e.target.value
-    term === '' && setTerm('') && history.push('/')
+    if (term === '') {
+      setTerm('')
+      setShouldFetch(false)
+      setPayload([])
+
+      history.push('/')
+    }
     if (term.length >= 5) {
+      const dataResults = data && data.results
+
       setTerm(term)
       setShouldFetch(true)
 
-      const dat = data && data.results
-
-      setPayload(payload)
+      setPayload(dataResults)
 
       history.push('/')
     }
 
     return false
   }
+
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault()
-    const value = document.getElementsByTagName('input')[0].value
     setShouldFetch(true)
-    setPayload(payload)
+
+    const value = document.getElementsByTagName('input')[0].value
+    const dataResults = data && data.results
+    setPayload(dataResults)
 
     history.push('/')
 
     setTerm(value)
   }
+
   const filters = [
     {
-      label: 'filter by Tv',
+      label: 'Show by Tv',
       key: 'tv',
     },
     {
-      label: 'filter by Movie',
+      label: 'Show by Movie',
       key: 'movie',
     },
+    {
+      label: 'Show by Actor',
+      key: 'person',
+    },
+    {
+      label: 'Show All',
+      key: '',
+    },
   ]
+
+  console.log('payload: ', payload)
   return (
     <>
+      <h1> Movie search </h1>
       <QuickSearch
         placeholder="Search a programme..."
         onSubmit={handleSubmit}
@@ -94,24 +114,21 @@ export const Search: FC<Props> = () => {
           placeholder="Select a model"
           className="selectDark"
           name="SelectModel"
-          aria-disabled={payload && !error ? false : true}
-          disabled={payload && !error ? false : true}
+          aria-disabled={isValidating || data ? false : true}
+          disabled={isValidating || data ? false : true}
           onChange={(e: React.ChangeEvent<any>) => {
-            console.log(e)
-            let dataPreFiltered = [...payload]
-
-            const dataFiltered = dataPreFiltered.filter((r, i, b) => {
+            const dataFiltered = fetchedData.filter((r) => {
               return r.media_type === e.target.value
             })
-            const updateMoviesState = dataPreFiltered.filter((movie) =>
-              movie.media_type.toUpperCase().includes(e.target.value.toUpperCase())
-            )
+            setPayload(dataFiltered)
 
-            console.log('rows: ', updateMoviesState)
-            setPayload([...dataPreFiltered, ...dataFiltered])
+            if (e.target.value === '') {
+              const dataResults = data && data.results
+              setPayload(dataResults)
+            }
           }}
         >
-          <option value="">Filter y</option>
+          <option value="">Filter by</option>
           {filters.map((item, idx) => {
             const { label, key } = item
             return (
@@ -127,9 +144,10 @@ export const Search: FC<Props> = () => {
           'Loading...'
         ) : (
           <SearchResults
-            results={payload}
+            results={payload || (data && data.results)}
             handleClick={() => {
               setTerm('')
+              setPayload([])
             }}
           />
         )}

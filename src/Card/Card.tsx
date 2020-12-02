@@ -17,7 +17,7 @@ export const Cards = styled.ul`
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   grid-gap: 2rem;
   margin: 0;
-  padding: 0.5rem;
+  padding: 0;
   box-sizing: border-box;
   cursor: pointer;
   @media ${device.mobileS} {

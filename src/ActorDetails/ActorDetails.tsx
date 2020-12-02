@@ -42,11 +42,14 @@ export const ActorDetails: FC<Props> = ({ match }) => {
     <section>
       <div>
         <h3>{data && data.name}</h3>
-        <p>Birthday: {formatDateUK(data && data.birthday)}</p>
-        <p>Biography: {data && data.biography}</p>
+        <p>
+          Birthday:
+          {`${data && data.birthday !== null ? formatDateUK(data.birthday) : ' Not available'}`}
+        </p>
+        <p>Biography: {data && data.biography !== null ? data.biography : ' Not available'}</p>
         <p>Born in: {data && data.place_of_birth}</p>
       </div>
-      <h3>Most recent Movies appeared</h3>
+      <h3>Most recent Movies </h3>
       <Cards>
         {data &&
           data.movie_credits &&
@@ -76,7 +79,7 @@ export const ActorDetails: FC<Props> = ({ match }) => {
                     <CardBody>
                       <h3>{data.title || data.name}</h3>
                       <p>Character: {data.character}</p>
-                      <p>Release: {formatDateUK(data && data.release_date)}</p>
+                      <p>Released: {formatDateUK(data.release_date)}</p>
                     </CardBody>
                   </SearchLink>
                 </Card>
@@ -85,38 +88,39 @@ export const ActorDetails: FC<Props> = ({ match }) => {
       </Cards>
       <h3>Most recent Tv shows appeared</h3>
       <Cards>
-        {data &&
-          data.tv_credits &&
-          data.tv_credits.cast
-            .sort((a, b) => {
-              if (a['first_air_date'] > b['first_air_date']) {
-                return -1
-              }
+        {data && data.tv_credits.cast
+          ? data.tv_credits.cast
+              .sort((a, b) => {
+                if (a['first_air_date'] > b['first_air_date']) {
+                  return -1
+                }
 
-              return 0
-            })
-            .slice(0, 6)
-            .map((data) => {
-              return (
-                <Card>
-                  <SearchLink to={`/tv/${data.id}`}>
-                    <Media100>
-                      <img
-                        alt={data.name}
-                        src={
-                          data.poster_path !== null
-                            ? `${base_url}${data.poster_path}`
-                            : `${placeholder}`
-                        }
-                      />
-                    </Media100>
-                    <CardBody>
-                      <h3>{data.title || data.name}</h3>
-                    </CardBody>
-                  </SearchLink>
-                </Card>
-              )
-            })}
+                return 0
+              })
+              .slice(0, 6)
+              .map((data) => {
+                return (
+                  <Card>
+                    <SearchLink to={`/tv/${data.id}`}>
+                      <Media100>
+                        <img
+                          alt={data.name}
+                          src={
+                            data.poster_path !== null
+                              ? `${base_url}${data.poster_path}`
+                              : `${placeholder}`
+                          }
+                        />
+                      </Media100>
+                      <CardBody>
+                        <h3>{data.title || data.name}</h3>
+                        <p>First Broadcasted: {formatDateUK(data.first_air_date)}</p>
+                      </CardBody>
+                    </SearchLink>
+                  </Card>
+                )
+              })
+          : 'Not available'}
       </Cards>
       <Route path="/result/:resultId" component={ShowDetails} />
       <Route path="/tv/:resultId" component={TvDetails} />

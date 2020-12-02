@@ -32,12 +32,16 @@ export const SearchResults: FC<Props> = ({ results, handleClick }) => {
             )
             .map((result) => {
               let link
+              let image
               if (result.media_type === 'movie') {
                 link = `/result/${result.id}`
+                image = result.poster_path
               } else if (result.media_type === 'tv') {
                 link = `/tv/${result.id}`
+                image = result.poster_path
               } else {
                 link = `/person/${result.id}`
+                image = result.profile_path
               }
 
               return (
@@ -51,11 +55,7 @@ export const SearchResults: FC<Props> = ({ results, handleClick }) => {
                     <Media100>
                       <img
                         alt={result.original_name}
-                        src={
-                          result.poster_path !== null || result.poster_path !== null
-                            ? `${base_url}${result.poster_path}`
-                            : `${placeholder}`
-                        }
+                        src={image !== null ? `${base_url}${image}` : `${placeholder}`}
                       />
                     </Media100>
                     <CardBody>
@@ -66,7 +66,6 @@ export const SearchResults: FC<Props> = ({ results, handleClick }) => {
                 </SearchLink>
               )
             })}
-        {results && results && results.length === 0 && <p>Not results found</p>}
         <Route path="/result/:resultId" component={ShowDetails} />
         <Route path="/tv/:resultId" component={TvDetails} />
         <Route path="/person/:resultId" component={ActorDetails} />

@@ -9,6 +9,8 @@ import { ActorDetails } from '../ActorDetails'
 import { fetchData } from '../utilis/fetchData'
 import { formatDateUKYear } from '../utilis/date'
 import { Cards, Card, CardBody } from '../Card'
+import { Error } from '../Error'
+
 import { Media100, Media16x9 } from '../MediaRatio'
 import { Link, Route } from 'react-router-dom'
 
@@ -39,34 +41,47 @@ export const TvDetails: FC<Props> = ({ match, result }) => {
     }
   )
   console.log('data: ', data)
+  if (error) {
+    return <Error>Something went wrong</Error>
+  }
   const base_url = 'https://image.tmdb.org/t/p/w780'
   const placeholder = 'http://via.placeholder.com/400x200?text=Sorry+No+Image+Available'
   const castLength = data && data.credits && data.credits.cast.length
   return (
     <section>
       <div>
-        <h3>{data && data.original_name}</h3>
+        <h3>{data && data.name}</h3>
         <span>{formatDateUKYear(data && data.release_date)}</span>
         <p>{data && data.overview}</p>
-        <p>
-          Rating: {isNaN(data && data.vote_average) ? 0 : Math.ceil(data && data.vote_average * 10)}
-          %
-        </p>
-        <p>{data && data.in_production ? 'Series available' : 'Series ended'}</p>
-        <p>{data && data.number_of_seasons ? `Season/s ${data.number_of_seasons}` : ''}</p>
-        <p>
-          {data && data.number_of_episodes ? `Number of episodes ${data.number_of_episodes}` : ''}
-        </p>
+        <h4>
+          <strong>Produced in:</strong>
+        </h4>
+        {data &&
+          data.production_countries.slice(0, 3).map((data) => {
+            return <span> {data.name}</span>
+          })}
 
         <p>
-          Created by
-          {data &&
-            data.created_by &&
-            data.created_by.slice(0, 3).map((data) => {
-              return <span> {data.name}</span>
-            })}
+          <strong>Rating:</strong>{' '}
+          {isNaN(data && data.vote_average) ? 0 : Math.ceil(data && data.vote_average * 10)}%
         </p>
-        <h3>Produced by</h3>
+        <p>{data && data.in_production ? 'Series available' : 'Series ended'}</p>
+        <p>{data && data.number_of_seasons ? `Season/s: ${data.number_of_seasons}` : ''}</p>
+        <p>
+          {data && data.number_of_episodes ? `Number of episodes: ${data.number_of_episodes}` : ''}
+        </p>
+
+        <h4>
+          <strong>Created by</strong>
+        </h4>
+        {data &&
+          data.created_by.slice(0, 3).map((data) => {
+            return <span> {data.name},</span>
+          })}
+
+        <h4>
+          <strong>Produced by</strong>
+        </h4>
         <Cards>
           {data &&
             data.production_companies &&
@@ -79,11 +94,11 @@ export const TvDetails: FC<Props> = ({ match, result }) => {
             })}
         </Cards>
       </div>
-      <h3>Cast</h3>
+      <h4>Cast</h4>
       <Cards>
         {data &&
           data.credits &&
-          data.credits.cast.slice(0, 3).map((data) => {
+          data.credits.cast.slice(0, 6).map((data) => {
             return (
               <Card>
                 <SearchLink to={`/person/${data.id}`}>
@@ -104,7 +119,7 @@ export const TvDetails: FC<Props> = ({ match, result }) => {
               </Card>
             )
           })}
-        <p>{castLength > 6 ? 'and many more' : ''}</p>
+        <p>{castLength > 6 ? 'and many more...' : ''}</p>
       </Cards>
       <div>
         <h3>Genres</h3>

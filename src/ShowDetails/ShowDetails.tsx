@@ -37,6 +37,7 @@ export const ShowDetails: FC<Props> = ({ match }) => {
     return <Error>Something went wrong</Error>
   }
   const castLength = data && data.credits && data.credits.cast.length
+  const placeholder = 'http://via.placeholder.com/400x200?text=Sorry+No+Image+Available'
 
   return (
     <section>
@@ -48,7 +49,9 @@ export const ShowDetails: FC<Props> = ({ match }) => {
       <p>{data && data.overview}</p>
 
       <div>
-        <h4>Cast</h4>
+        <h4>
+          <strong>Cast</strong>
+        </h4>
 
         <Cards>
           {data &&
@@ -63,7 +66,7 @@ export const ShowDetails: FC<Props> = ({ match }) => {
                         src={
                           data.profile_path !== null && data.profile_path !== undefined
                             ? `${base_url}${data.profile_path}`
-                            : ''
+                            : `${placeholder}`
                         }
                       />
                     </Media100>
@@ -78,7 +81,9 @@ export const ShowDetails: FC<Props> = ({ match }) => {
         </Cards>
       </div>
       <div>
-        <h3>Genres</h3>
+        <h4>
+          <strong>Genres</strong>
+        </h4>
         <Cards>
           {data &&
             data.genres &&
