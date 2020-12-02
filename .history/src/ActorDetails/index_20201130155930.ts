@@ -1,1 +1,0 @@
-export { ActorDetails } from './ActorDetails'
