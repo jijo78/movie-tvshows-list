@@ -12,11 +12,11 @@
 /build
 
 # misc
-.DS_Store
-.idea
-.history
-.vscode
-.env
+/.DS_Store
+/.idea
+/.history
+/.vscode
+/.env
 *.code-workspace
 *.log
 
