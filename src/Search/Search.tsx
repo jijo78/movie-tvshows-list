@@ -7,6 +7,7 @@ import config from '../config'
 import { QuickSearch } from '../QuickSearch'
 import { SearchResults } from '../SearchResults'
 import { Error } from '../Error'
+import { Filter } from '../Filter'
 
 import { fetchData } from '../utilis/fetchData'
 import { useHistory } from 'react-router-dom'
@@ -20,9 +21,12 @@ const Container = styled('section')`
   justify-content: center;
 `
 
-export const Search: FC<Props> = () => {
+export const Search: FC<Props> = (props) => {
   const [shouldFetch, setShouldFetch] = useState(false)
   const [term, setTerm] = useState('')
+  const [location, setLocation] = useState('')
+  console.log('location: ', location)
+
   const [payload, setPayload] = useState([]) as Array<any>
   let fetchedData
 
@@ -39,29 +43,23 @@ export const Search: FC<Props> = () => {
     }
   )
   fetchedData = data && data.results
+  const dataResults = data && data.results
 
   if (error) {
     return <Error>Something went wrong</Error>
   }
-  console.log('payload: ', payload)
 
   const handleChange = (e: React.ChangeEvent<any>): boolean => {
     const term = e.target.value
     if (term === '') {
       setTerm('')
-      setShouldFetch(false)
       setPayload([])
-
-      history.push('/')
     }
     if (term.length >= 5) {
-      const dataResults = data && data.results
-
       setTerm(term)
       setShouldFetch(true)
 
       setPayload(dataResults)
-
       history.push('/')
     }
 
@@ -70,17 +68,26 @@ export const Search: FC<Props> = () => {
 
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault()
-    setShouldFetch(true)
 
     const value = document.getElementsByTagName('input')[0].value
-    const dataResults = data && data.results
     setPayload(dataResults)
 
     history.push('/')
 
     setTerm(value)
+    setShouldFetch(true)
   }
 
+  const filterChange = (e: React.ChangeEvent<any>) => {
+    const dataFiltered = fetchedData.filter((r) => {
+      return r.media_type === e.target.value
+    })
+    setPayload(dataFiltered)
+
+    if (e.target.value === '') {
+      setPayload(dataResults)
+    }
+  }
   const filters = [
     {
       label: 'Show by Tv',
@@ -109,36 +116,8 @@ export const Search: FC<Props> = () => {
         onSubmit={handleSubmit}
         handleChange={handleChange}
       />
-      <form>
-        <select
-          placeholder="Select a model"
-          className="selectDark"
-          name="SelectModel"
-          aria-disabled={isValidating || data ? false : true}
-          disabled={isValidating || data ? false : true}
-          onChange={(e: React.ChangeEvent<any>) => {
-            const dataFiltered = fetchedData.filter((r) => {
-              return r.media_type === e.target.value
-            })
-            setPayload(dataFiltered)
+      <Filter handleChange={filterChange} isValidating={isValidating} fetching={shouldFetch} />
 
-            if (e.target.value === '') {
-              const dataResults = data && data.results
-              setPayload(dataResults)
-            }
-          }}
-        >
-          <option value="">Filter by</option>
-          {filters.map((item, idx) => {
-            const { label, key } = item
-            return (
-              <option value={key} key={idx}>
-                {label}
-              </option>
-            )
-          })}
-        </select>
-      </form>
       <Container as="section">
         {isValidating ? (
           'Loading...'

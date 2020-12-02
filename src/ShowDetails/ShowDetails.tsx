@@ -9,7 +9,7 @@ import { Error } from '../Error'
 import { ActorDetails } from '../ActorDetails'
 import styled from 'styled-components'
 
-import { Media16x9, Media100 } from '../MediaRatio'
+import { Media100 } from '../MediaRatio'
 const SearchLink = styled(Link)`
   color: inherit;
   text-decoration: none;
@@ -35,6 +35,9 @@ export const ShowDetails: FC<Props> = ({ match }) => {
   console.log('data: ', data)
   if (error) {
     return <Error>Something went wrong</Error>
+  }
+  if (isValidating) {
+    return <Error>Loading</Error>
   }
   const castLength = data && data.credits && data.credits.cast.length
   const placeholder = 'http://via.placeholder.com/400x200?text=Sorry+No+Image+Available'

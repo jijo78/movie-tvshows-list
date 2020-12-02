@@ -3,7 +3,8 @@ import styled from 'styled-components'
 
 type Props = {
   handleChange: (e: React.ChangeEvent<any>) => void
-  isValidating?: boolean
+  isValidating: boolean
+  fetching: boolean
 }
 
 const Search = styled('section')`
@@ -29,6 +30,7 @@ const Select = styled('select')`
   padding: 0.75rem;
   width: 30rem;
   font-size: 1.3rem;
+  margin: 1.5rem 0;
   &::placeholder {
     color: #ccc;
   }
@@ -51,7 +53,7 @@ const filters = [
     key: '',
   },
 ]
-export const Filter: FC<Props> = ({ handleChange, isValidating }) => {
+export const Filter: FC<Props> = ({ handleChange, isValidating, fetching }) => {
   return (
     <Search>
       <SearchForm>
@@ -61,6 +63,8 @@ export const Filter: FC<Props> = ({ handleChange, isValidating }) => {
           onChange={(e: React.ChangeEvent<any>) => {
             handleChange && handleChange(e)
           }}
+          aria-disabled={isValidating || fetching ? false : true}
+          disabled={isValidating || fetching ? false : true}
           name="filter-by"
           id="filter-by"
           className="search__input"
