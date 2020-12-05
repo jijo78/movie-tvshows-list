@@ -2,23 +2,23 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 
 import { Cards, Card, CardBody } from '../Card'
+import { ResultList } from '../types'
 
 import { Media100 } from '../MediaRatio'
 import { ShowDetails, TvDetails } from '../ShowDetails'
 import { ActorDetails } from '../ActorDetails'
 // @ts-ignore
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
 const SearchLink = styled(Link)`
   color: inherit;
   text-decoration: none;
 `
 interface Props {
-  results: Array<any>
+  results: ResultList[]
   handleClick?: (e: React.ChangeEvent<any>) => void
 }
 
 export const SearchResults: FC<Props> = ({ results, handleClick }) => {
-  console.log('results: ', results)
   const base_url = 'https://image.tmdb.org/t/p/w780'
   const placeholder = 'http://via.placeholder.com/400x200?text=Sorry+No+Image+Available'
 
@@ -66,9 +66,11 @@ export const SearchResults: FC<Props> = ({ results, handleClick }) => {
                 </SearchLink>
               )
             })}
-        <Route path="/result/:resultId" component={ShowDetails} />
-        <Route path="/tv/:resultId" component={TvDetails} />
-        <Route path="/person/:resultId" component={ActorDetails} />
+        <Switch>
+          <Route path="/result/:resultId" component={ShowDetails} />
+          <Route path="/tv/:resultId" component={TvDetails} />
+          <Route path="/person/:resultId" component={ActorDetails} />
+        </Switch>
       </Cards>
     </Router>
   )

@@ -3,7 +3,6 @@ import React, { FC, useEffect } from 'react'
 import styled from 'styled-components'
 
 type Props = {
-  onClick?: (e: React.MouseEvent<any>) => void
   handleChange: (e: React.ChangeEvent<any>) => void
   onSubmit?: (e: React.ChangeEvent<any>) => void
   placeholder?: string

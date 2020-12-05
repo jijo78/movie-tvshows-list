@@ -2,11 +2,8 @@ import React, { FC } from 'react'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Search } from './Search'
-interface Props {
-  children: React.ReactChildren
-}
 
-const App: FC<Props> = () => {
+const App: FC = () => {
   return (
     <Router>
       <Switch>

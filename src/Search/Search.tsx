@@ -24,8 +24,7 @@ const Container = styled('section')`
 export const Search: FC<Props> = (props) => {
   const [shouldFetch, setShouldFetch] = useState(false)
   const [term, setTerm] = useState('')
-  const [location, setLocation] = useState('')
-  console.log('location: ', location)
+  const [validating, setIsValidating] = useState(false)
 
   const [payload, setPayload] = useState([]) as Array<any>
   let fetchedData
@@ -43,17 +42,26 @@ export const Search: FC<Props> = (props) => {
     }
   )
   fetchedData = data && data.results
+  console.log('data: ', data)
+
   const dataResults = data && data.results
 
+  if (data && data.errors) {
+    setIsValidating(isValidating)
+    setShouldFetch(false)
+  }
   if (error) {
     return <Error>Something went wrong</Error>
   }
 
   const handleChange = (e: React.ChangeEvent<any>): boolean => {
     const term = e.target.value
+
     if (term === '') {
       setTerm('')
       setPayload([])
+      setIsValidating(isValidating)
+      setShouldFetch(false)
     }
     if (term.length >= 5) {
       setTerm(term)
@@ -75,6 +83,9 @@ export const Search: FC<Props> = (props) => {
     history.push('/')
 
     setTerm(value)
+    if (data && data.errors) {
+      setTerm('')
+    }
     setShouldFetch(true)
   }
 
@@ -88,26 +99,7 @@ export const Search: FC<Props> = (props) => {
       setPayload(dataResults)
     }
   }
-  const filters = [
-    {
-      label: 'Show by Tv',
-      key: 'tv',
-    },
-    {
-      label: 'Show by Movie',
-      key: 'movie',
-    },
-    {
-      label: 'Show by Actor',
-      key: 'person',
-    },
-    {
-      label: 'Show All',
-      key: '',
-    },
-  ]
 
-  console.log('payload: ', payload)
   return (
     <>
       <h1> Movie search </h1>
@@ -116,7 +108,7 @@ export const Search: FC<Props> = (props) => {
         onSubmit={handleSubmit}
         handleChange={handleChange}
       />
-      <Filter handleChange={filterChange} isValidating={isValidating} fetching={shouldFetch} />
+      <Filter handleChange={filterChange} isValidating={validating} fetching={shouldFetch} />
 
       <Container as="section">
         {isValidating ? (
