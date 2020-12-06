@@ -27,14 +27,14 @@ export const SearchResults: FC<Props> = ({ results, handleClick }) => {
       <h2 style={{ display: 'none' }}>Search Results</h2>
 
       <Router>
-        <Cards key={results[0].id}>
+        <Cards>
           {results &&
             results
               .filter(
                 (r) =>
                   r.media_type === 'movie' || r.media_type === 'tv' || r.media_type === 'person'
               )
-              .map((result) => {
+              .map((result, i) => {
                 let link
                 let image
                 if (result.media_type === 'movie') {
@@ -49,14 +49,14 @@ export const SearchResults: FC<Props> = ({ results, handleClick }) => {
                 }
 
                 return (
-                  <SearchLink
-                    to={`${link}`}
-                    onClick={(e) => {
-                      handleClick && handleClick(e)
-                    }}
-                    title={result.media_type}
-                  >
-                    <Card key={result.id} data-testid="result-list">
+                  <Card data-testid="result-list" key={result.id + i}>
+                    <SearchLink
+                      to={`${link}`}
+                      onClick={(e) => {
+                        handleClick && handleClick(e)
+                      }}
+                      title={result.media_type}
+                    >
                       <Media100>
                         <img
                           alt={result.title || result.name}
@@ -67,8 +67,8 @@ export const SearchResults: FC<Props> = ({ results, handleClick }) => {
                         <h3>{result.title || result.name}</h3>
                         <p>{result.media_type}</p>
                       </CardBody>
-                    </Card>
-                  </SearchLink>
+                    </SearchLink>
+                  </Card>
                 )
               })}
           <Switch>

@@ -21,7 +21,7 @@ const Container = styled('section')`
   justify-content: center;
 `
 
-export const Search: FC<Props> = (props) => {
+export const Search: FC<Props> = () => {
   const [shouldFetch, setShouldFetch] = useState(false)
   const [term, setTerm] = useState('')
   const [validating, setIsValidating] = useState(false)
@@ -42,7 +42,6 @@ export const Search: FC<Props> = (props) => {
     }
   )
   fetchedData = data && data.results
-  console.log('data: ', data)
 
   const dataResults = data && data.results
 
