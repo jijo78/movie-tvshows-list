@@ -39,7 +39,7 @@ const SearchLabel = styled('label')`
 const SearchInput = styled('input')`
   position: relative;
   color: #ccc;
-  width: 100%;
+  width: 80%;
   text-align: center;
   padding: 1rem;
   font-size: 1.5rem;

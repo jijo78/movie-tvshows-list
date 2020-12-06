@@ -23,6 +23,8 @@ const Container = styled('section')`
 const Main = styled('main')`
   margin: 0 auto;
   max-width: 90rem;
+  padding: 1rem;
+  box-sizing: border-box;
 `
 export const Search: FC<Props> = () => {
   const [shouldFetch, setShouldFetch] = useState(false)
