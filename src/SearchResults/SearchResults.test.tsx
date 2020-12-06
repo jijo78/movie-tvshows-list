@@ -65,7 +65,7 @@ describe('<SearchResults />', () => {
 
     expect(link).toHaveAttribute('href', '/person/244117')
   })
-  it('should call onClick event ', async () => {
+  it('should call onClick event', async () => {
     const { findByTitle } = renderComponent()
     const link = await findByTitle('person')
 
