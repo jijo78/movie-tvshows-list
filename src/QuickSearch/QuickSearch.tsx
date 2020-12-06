@@ -28,10 +28,14 @@ const SearchForm = styled('form')`
   }
 `
 const SearchLegend = styled('legend')`
-  display: none;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
 `
 const SearchLabel = styled('label')`
-  display: none;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
 `
 
 const SearchInput = styled('input')`
@@ -56,17 +60,13 @@ const Button = styled('button')`
   position: absolute;
   top: 0;
   right: 0;
-  display: inline-flex;
-  color: #ffffff;
   padding: 1rem;
   text-align: center;
-  justify-content: center;
-  align-items: center;
   text-transform: uppercase;
   font-size: 1rem;
   font-weight: bold;
-  background-color: #79d6f2;
-  color: #091f29;
+  background-color: #0125f6;
+  color: #ffffff;
 `
 
 export const QuickSearch: FC<Props> = ({ onSubmit, handleChange, placeholder }) => {

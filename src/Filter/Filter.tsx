@@ -19,10 +19,14 @@ const SearchForm = styled('form')`
   position: relative;
 `
 const SearchLegend = styled('legend')`
-  display: none;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
 `
 const SearchLabel = styled('label')`
-  display: none;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
 `
 
 const Select = styled('select')`
