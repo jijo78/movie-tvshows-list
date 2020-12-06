@@ -1,5 +1,6 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
+import { device, size } from '../Card'
 
 type Props = {
   handleChange: (e: React.ChangeEvent<any>) => void
@@ -33,6 +34,16 @@ const Select = styled('select')`
   margin: 1.5rem 0;
   &::placeholder {
     color: #ccc;
+  }
+  @media ${device.mobileS} {
+    width: 17rem;
+  }
+
+  @media ${device.mobileL} {
+    width: 22rem;
+  }
+  @media ${device.laptop} {
+    width: 30rem;
   }
 `
 const filters = [

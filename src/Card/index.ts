@@ -1,1 +1,1 @@
-export { Cards, Card, CardBody } from './Card'
+export { Cards, Card, CardBody, device, size } from './Card'

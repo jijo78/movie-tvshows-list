@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-const size = {
+export const size = {
   mobileS: '320px',
   mobileL: '600px',
   laptop: '1024px',

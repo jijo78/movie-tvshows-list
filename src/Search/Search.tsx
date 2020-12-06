@@ -41,6 +41,8 @@ export const Search: FC<Props> = () => {
       revalidateOnFocus: false,
     }
   )
+
+  // Saving data in array to pass it to the filter component, and not manipulate the data array
   fetchedData = data && data.results
 
   const dataResults = data && data.results
