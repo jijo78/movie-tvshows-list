@@ -75,7 +75,7 @@ export interface ResultList {
   popularity: number
   poster_path: string | null
   profile_path?: string | null
-  name?: string | undefined
+  name: string | undefined
   original_name?: string | undefined
   release_date: string
   title: string

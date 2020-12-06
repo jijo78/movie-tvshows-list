@@ -17,13 +17,12 @@ interface Props {
 }
 
 const Container = styled('section')`
-  display: flex;
-  justify-content: center;
+  position: relative;
 `
-const Header = styled('h1')`
+
+const Main = styled('main')`
   margin: 0 auto;
-  width: 80%;
-  padding: 1rem 0;
+  max-width: 90rem;
 `
 export const Search: FC<Props> = () => {
   const [shouldFetch, setShouldFetch] = useState(false)
@@ -106,8 +105,8 @@ export const Search: FC<Props> = () => {
   }
 
   return (
-    <main>
-      <Header>Movie search </Header>
+    <Main>
+      <h1>Movie search</h1>
       <QuickSearch
         placeholder="Search a programme..."
         onSubmit={handleSubmit}
@@ -127,7 +126,8 @@ export const Search: FC<Props> = () => {
             }}
           />
         )}
+        <p>{dataResults && dataResults.length === 0 ? '0 matches found' : ''}</p>
       </Container>
-    </main>
+    </Main>
   )
 }

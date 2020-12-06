@@ -20,16 +20,6 @@ export const Cards = styled.ul`
   padding: 0;
   box-sizing: border-box;
   cursor: pointer;
-  @media ${device.mobileS} {
-    max-width: 33rem;
-  }
-
-  @media ${device.mobileL} {
-    max-width: 63rem;
-  }
-  @media ${device.laptop} {
-    max-width: 83rem;
-  }
 `
 
 export const Card = styled('li')<{ bgColor?: string; color?: string }>((props) => ({

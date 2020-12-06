@@ -49,7 +49,7 @@ export const SearchResults: FC<Props> = ({ results, handleClick }) => {
                 }
 
                 return (
-                  <Card data-testid="result-list" key={result.id + i}>
+                  <Card data-testid="result-list" key={i}>
                     <SearchLink
                       to={`${link}`}
                       onClick={(e) => {

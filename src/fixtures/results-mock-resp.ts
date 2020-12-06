@@ -8,6 +8,7 @@ export const resultsList: ResultList[] = [
     genre_ids: [18],
     id: 244117,
     media_type: 'movie',
+    name: '',
     original_language: 'en',
     original_title: 'Emily & Tim',
     overview:
@@ -15,7 +16,6 @@ export const resultsList: ResultList[] = [
     popularity: 4.694,
     poster_path: '/t37Xa74GFO1R3kebocqSV4hFrPO.jpg',
     profile_path: '/t37Xa74GFO1R3kebocqSV4hFrPO.jpg',
-
     release_date: '2015-08-29',
     title: 'Emily & Tim',
     video: false,
@@ -29,6 +29,7 @@ export const resultsList: ResultList[] = [
     id: 244117,
     media_type: 'tv',
     original_language: 'en',
+    name: '',
     original_title: 'Tim',
     overview:
       'The movie is comprised of six vignettes. A look at the tumultuous marriage of Tim and Emily Hanratty over half a century.',
@@ -47,6 +48,7 @@ export const resultsList: ResultList[] = [
     backdrop_path: '/t37Xa74GFO1R3kebocqSV4hFrPO.jpg',
     genre_ids: [18],
     id: 244117,
+    name: '',
     media_type: 'person',
     original_language: 'en',
     original_title: 'Emily ',

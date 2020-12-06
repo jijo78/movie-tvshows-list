@@ -9,10 +9,7 @@ type Props = {
 }
 
 const Search = styled('section')`
-  margin: 0 auto;
-  display: flex;
   margin-top: 1rem;
-  width: 80%;
 `
 
 const SearchForm = styled('form')`
