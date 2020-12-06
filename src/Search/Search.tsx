@@ -20,7 +20,11 @@ const Container = styled('section')`
   display: flex;
   justify-content: center;
 `
-
+const Header = styled('h1')`
+  margin: 0 auto;
+  width: 80%;
+  padding: 1rem 0;
+`
 export const Search: FC<Props> = () => {
   const [shouldFetch, setShouldFetch] = useState(false)
   const [term, setTerm] = useState('')
@@ -102,8 +106,8 @@ export const Search: FC<Props> = () => {
   }
 
   return (
-    <>
-      <h1> Movie search </h1>
+    <main>
+      <Header>Movie search </Header>
       <QuickSearch
         placeholder="Search a programme..."
         onSubmit={handleSubmit}
@@ -124,6 +128,6 @@ export const Search: FC<Props> = () => {
           />
         )}
       </Container>
-    </>
+    </main>
   )
 }
