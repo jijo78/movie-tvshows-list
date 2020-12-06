@@ -40,7 +40,6 @@ export const TvDetails: FC<Props> = ({ match }) => {
       revalidateOnFocus: false,
     }
   )
-  console.log('data: ', data)
   if (error) {
     return <Error>Something went wrong</Error>
   }
@@ -94,7 +93,7 @@ export const TvDetails: FC<Props> = ({ match }) => {
               {data.production_companies &&
                 data.production_companies.slice(0, 3).map((data) => {
                   return (
-                    <Card bgColor="#ff9c03" color="#000">
+                    <Card bgColor="#ff9c03" color="#000" key={data.id}>
                       <InnerLogo>{data.name}</InnerLogo>
                     </Card>
                   )

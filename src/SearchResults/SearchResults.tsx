@@ -27,7 +27,7 @@ export const SearchResults: FC<Props> = ({ results, handleClick }) => {
       <h2 style={{ display: 'none' }}>Search Results</h2>
 
       <Router>
-        <Cards>
+        <Cards key={results[0].id}>
           {results &&
             results
               .filter(
