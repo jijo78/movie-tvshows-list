@@ -73,7 +73,7 @@ export const Filter: FC<Props> = ({ handleChange, isValidating, fetching }) => {
           {filters.map((item, idx) => {
             const { label, key } = item
             return (
-              <option value={key} key={idx}>
+              <option value={key} key={idx} data-testid="select-option">
                 {label}
               </option>
             )

@@ -64,7 +64,7 @@ describe('<ShowDetails />', () => {
 
     const li = queryAllByTestId('cast-list')
 
-    expect(li.length).toBe(6)
+    expect(li.length).toBe(4)
   })
 
   it('should render a list of genres', async () => {
@@ -94,19 +94,5 @@ describe('<ShowDetails />', () => {
     const link = await findByTitle('Jason Sudeikis')
 
     expect(link).toHaveAttribute('href', '/person/58224')
-  })
-
-  it('handles server error', async () => {
-    rest.get(
-      'https://api.themoviedb.org/3/movie/454640?api_key=00827fd50b322764fdf4d571822a4a05&append_to_response=c redits',
-      (_req, res, ctx) => {
-        return res(ctx.status(404), ctx.json({}))
-      }
-    )
-
-    const { findByText } = renderComponent()
-
-    const error = await findByText('Sorry. Not details available')
-    expect(error).toBeInTheDocument()
   })
 })

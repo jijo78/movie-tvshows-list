@@ -23,55 +23,61 @@ export const SearchResults: FC<Props> = ({ results, handleClick }) => {
   const placeholder = 'http://via.placeholder.com/400x200?text=Sorry+No+Image+Available'
 
   return (
-    <Router>
-      <Cards>
-        {results &&
-          results
-            .filter(
-              (r) => r.media_type === 'movie' || r.media_type === 'tv' || r.media_type === 'person'
-            )
-            .map((result) => {
-              let link
-              let image
-              if (result.media_type === 'movie') {
-                link = `/result/${result.id}`
-                image = result.poster_path
-              } else if (result.media_type === 'tv') {
-                link = `/tv/${result.id}`
-                image = result.poster_path
-              } else {
-                link = `/person/${result.id}`
-                image = result.profile_path
-              }
+    <>
+      <h2 style={{ display: 'none' }}>Search Results</h2>
 
-              return (
-                <SearchLink
-                  to={`${link}`}
-                  onClick={(e) => {
-                    handleClick && handleClick(e)
-                  }}
-                >
-                  <Card>
-                    <Media100>
-                      <img
-                        alt={result.original_name}
-                        src={image !== null ? `${base_url}${image}` : `${placeholder}`}
-                      />
-                    </Media100>
-                    <CardBody>
-                      <h3>{result.title || result.name}</h3>
-                      <p>{result.media_type}</p>
-                    </CardBody>
-                  </Card>
-                </SearchLink>
+      <Router>
+        <Cards>
+          {results &&
+            results
+              .filter(
+                (r) =>
+                  r.media_type === 'movie' || r.media_type === 'tv' || r.media_type === 'person'
               )
-            })}
-        <Switch>
-          <Route path="/result/:resultId" component={ShowDetails} />
-          <Route path="/tv/:resultId" component={TvDetails} />
-          <Route path="/person/:resultId" component={ActorDetails} />
-        </Switch>
-      </Cards>
-    </Router>
+              .map((result) => {
+                let link
+                let image
+                if (result.media_type === 'movie') {
+                  link = `/result/${result.id}`
+                  image = result.poster_path
+                } else if (result.media_type === 'tv') {
+                  link = `/tv/${result.id}`
+                  image = result.poster_path
+                } else {
+                  link = `/person/${result.id}`
+                  image = result.profile_path
+                }
+
+                return (
+                  <SearchLink
+                    to={`${link}`}
+                    onClick={(e) => {
+                      handleClick && handleClick(e)
+                    }}
+                    title={result.media_type}
+                  >
+                    <Card key={result.id} data-testid="result-list">
+                      <Media100>
+                        <img
+                          alt={result.title || result.name}
+                          src={image !== null ? `${base_url}${image}` : `${placeholder}`}
+                        />
+                      </Media100>
+                      <CardBody>
+                        <h3>{result.title || result.name}</h3>
+                        <p>{result.media_type}</p>
+                      </CardBody>
+                    </Card>
+                  </SearchLink>
+                )
+              })}
+          <Switch>
+            <Route path="/result/:resultId" component={ShowDetails} />
+            <Route path="/tv/:resultId" component={TvDetails} />
+            <Route path="/person/:resultId" component={ActorDetails} />
+          </Switch>
+        </Cards>
+      </Router>
+    </>
   )
 }

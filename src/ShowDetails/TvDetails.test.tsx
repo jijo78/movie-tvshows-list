@@ -85,19 +85,4 @@ describe('<TvDetails />', () => {
 
     expect(link).toHaveAttribute('href', '/person/222121')
   })
-
-  it('handles server error', async () => {
-    rest.get(
-      'https://api.themoviedb.org/3/movie?api_key=00827fd50b322764fdf4d571822a4a05&append_to_response=movie_credits,tv_credits',
-      (_req, res, ctx) => {
-        return res(ctx.status(500), ctx.json({}))
-      }
-    )
-
-    const { findByText } = renderComponent()
-
-    const error = await findByText('Sorry. Not details available')
-    expect(error).toBeInTheDocument()
-    cache.clear()
-  })
 })
