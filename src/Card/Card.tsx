@@ -24,10 +24,11 @@ export const Cards = styled.ul`
 
 export const Card = styled('li')<{ bgColor?: string; color?: string }>((props) => ({
   position: 'relative',
-  backgroundColor: `${props.bgColor || 'dodgerblue'} `,
-  color: `${props.color || 'white'}`,
+  backgroundColor: `${props.bgColor || 'white'} `,
+  color: `${props.color || 'black'}`,
   listStyleType: 'none',
-
+  borderRadius: '0.5rem',
+  padding: '0.5rem',
   boxSizing: 'border-box',
 }))
 
